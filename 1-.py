@@ -1,36 +1,37 @@
-class Aluno:
-    def __init__(self, nome, data_nascimento, notas):
-        self.nome = nome
-        self.data_nascimento = data_nascimento
-        self.notas = notas
+def calcular_media(notas):
+    return sum(notas) / len(notas)
 
-    def calcular_media(self):
-        return sum(self.notas) / len(self.notas)
+def verificar_aprovacao(media):
+    if media >= 60:
+        return "\033[32mAprovado"
+    else:
+        return "\033[31mReprovado"
 
-    def verificar_aprovacao(self):
-        media = self.calcular_media()
-        if media >= 6.0:
-            return "Aprovado"
-        else:
-            return "Reprovado"
+def main():
+    alunos = []
+    n_alunos = int(input("\033[37mDigite o número de alunos na sala:"))
 
-alunos = []
+    for i in range(n_alunos):
+        print(f"\nAluno {i+1}:")
+        nome = input("Nome: ")
+        data_nascimento = input("Data de Nascimento (DD/MM/AAAA):")
+        notas = []
+        for j in range(4):
+            nota = float(input(f"Nota do {j+1}º bimestre:"))
+            notas.append(nota)
 
-for _ in range(10):
-    nome = input("Digite o nome do aluno: ")
-    data_nascimento = input("Digite a data de nascimento do aluno (DD/MM/AAAA): ")
-    notas = []
-    for bimestre in range(1, 5):
-        nota = float(input(f"Digite a nota do {bimestre}º bimestre: "))
-        notas.append(nota)
-    aluno = Aluno(nome, data_nascimento, notas)
-    alunos.append(aluno)
+        media = calcular_media(notas)
+        situacao = verificar_aprovacao(media)
 
-print("\nResultados:")
-for aluno in alunos:
-    print(f"Nome: {aluno.nome}")
-    print(f"Data de Nascimento: {aluno.data_nascimento}")
-    print("Notas:", aluno.notas)
-    print("Média:", aluno.calcular_media())
-    print("Situação:", aluno.verificar_aprovacao())
-    print()
+        alunos.append({"Nome": nome, "Data de Nascimento": data_nascimento, "Notas": notas, "Média": media, "Situação": situacao})
+
+    print("\n\033[35m==Resultados==")
+    for aluno in alunos:
+        print("\n\033[37mNome:", aluno["Nome"])
+        print("Data de Nascimento:", aluno["Data de Nascimento"])
+        print("Notas:", aluno["Notas"])
+        print("Média:", aluno["Média"])
+        print("Situação:", aluno["Situação"])
+
+if __name__ == "__main__":
+    main()
